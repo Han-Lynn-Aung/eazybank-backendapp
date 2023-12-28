@@ -3,6 +3,9 @@ package com.natrix.EazyBankBackendApp.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -12,33 +15,35 @@ public class ProjectSecurityConfig {
 
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        /**
-         * Below is the custom security configuration
-         **/
+
         http.authorizeHttpRequests((requests) -> requests.
                 requestMatchers("/myAccount","/myBalance","/myCards","/myLoans").authenticated()
                 .requestMatchers("/contact","/notices").permitAll())
                 .formLogin(withDefaults())
                 .httpBasic(withDefaults());
         return http.build();
+    }
+
+    @Bean
+    public InMemoryUserDetailsManager userDetailsManager(){
 
         /**
-         * Configuration to permit all requests
+         * Approach 1 where we use withDefaultPasswordEncoder method
+         * while creating the user details
          */
-       /* http.authorizeHttpRequests((requests) -> requests.
-                        anyRequest().permitAll())
-                .formLogin(withDefaults())
-                .httpBasic(withDefaults());
-        return http.build();*/
 
-        /**
-         * Configuration to deny all requests
-         */
-       /* http.authorizeHttpRequests((requests) -> requests.
-                       anyRequest().denyAll())
-                .formLogin(withDefaults())
-                .httpBasic(withDefaults());
-        return http.build();
-        */
+        UserDetails admin = User.withDefaultPasswordEncoder()
+                .username("admin")
+                .password("12345")
+                .authorities("admin")
+                .build();
+
+        UserDetails user = User.withDefaultPasswordEncoder()
+                .username("user")
+                .password("12345")
+                .authorities("user")
+                .build();
+
+        return new InMemoryUserDetailsManager(admin,user);
     }
 }
