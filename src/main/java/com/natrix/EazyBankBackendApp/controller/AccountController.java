@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AccountController {
 
-    @GetMapping("/myAccount")
+    @GetMapping("/my-account")
     public String getAccount(){
         return "Here are the details of account from the DB.";
     }
