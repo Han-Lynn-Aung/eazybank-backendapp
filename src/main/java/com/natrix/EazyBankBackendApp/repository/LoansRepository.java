@@ -1,13 +1,14 @@
 package com.natrix.EazyBankBackendApp.repository;
 
-import com.natrix.EazyBankBackendApp.model.Customer;
+import com.natrix.EazyBankBackendApp.model.Loans;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface CustomerRepository extends JpaRepository<Customer,Integer> {
+public interface LoansRepository extends JpaRepository<Loans,Integer> {
 
-    List<Customer> findByEmail(String email);
+    List<Loans> findByCustomerIdOrderByLoanStartDateDesc(int customerId);
+
 }

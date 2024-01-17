@@ -1,55 +1,43 @@
 package com.natrix.EazyBankBackendApp.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.sql.Date;
+
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Customer {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO,generator="native")
-    @GenericGenerator(name = "native",strategy = "native")
-    private Long id;
-    @Column(nullable = false,unique = true)
+    @GenericGenerator(name = "native")
+    @Column(name = "customer_id")
+    private Integer customerId;
+
+    private String name;
+
     private String email;
+
+    @Column(name = "mobile_number", nullable = false, unique = true)
+    private String mobile;
+
     @Column(name = "customer_password", length = 60, nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String customerPassword;
 
     @Column(nullable = false)
     private String role;
 
-    public Customer() {
-    }
+    @Column(name = "customer_create_date")
+    private Date customerCreateDate;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getCustomerPassword() {
-        return customerPassword;
-    }
-
-    public void setCustomerPassword(String customerPassword) {
-        this.customerPassword = customerPassword;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 }
