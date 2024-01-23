@@ -8,7 +8,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
 import java.sql.Date;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -39,5 +42,8 @@ public class Customer {
 
     @Column(name = "customer_create_date")
     private Date customerCreateDate;
+
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
+    private Set<Authority> authorities;
 
 }
