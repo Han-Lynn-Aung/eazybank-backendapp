@@ -18,8 +18,6 @@ import org.springframework.web.cors.CorsConfigurationSource;
 
 import java.util.Collections;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 @Configuration
 public class ProjectSecurityConfig {
 
@@ -57,4 +55,5 @@ public class ProjectSecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }
